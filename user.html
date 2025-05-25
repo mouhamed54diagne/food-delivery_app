@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodDelivery</title>
+    <link rel="stylesheet" href="user-styles.css">
+</head>
+<body>
+    <!-- Authentication Section -->
+    <div id="auth-section" class="section">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h1>FoodDelivery</h1>
+                    <p>Quality food delivery service</p>
+                </div>
+                <div class="auth-tabs">
+                    <button class="tab-btn active" onclick="showTab('login')">Login</button>
+                    <button class="tab-btn" onclick="showTab('register')">Sign Up</button>
+                </div>
+                <div id="login-tab" class="auth-form">
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label for="login-email">Email</label>
+                            <input type="email" id="login-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Password</label>
+                            <input type="password" id="login-password" required>
+                        </div>
+                        <button type="submit" class="btn-primary">Sign In</button>
+                    </form>
+                    <div id="login-error" class="error-message"></div>
+                </div>
+                <div id="register-tab" class="auth-form" style="display: none;">
+                    <form id="register-form">
+                        <div class="form-group">
+                            <label for="register-name">Full Name</label>
+                            <input type="text" id="register-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-email">Email</label>
+                            <input type="email" id="register-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-password">Password</label>
+                            <input type="password" id="register-password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-address">Address</label>
+                            <input type="text" id="register-address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-phone">Phone</label>
+                            <input type="tel" id="register-phone" required>
+                        </div>
+                        <button type="submit" class="btn-primary">Create Account</button>
+                    </form>
+                    <div id="register-error" class="error-message"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="app-section" class="section" style="display: none;">
+        <header>
+            <div class="logo">
+                <h1>FoodDelivery</h1>
+            </div>
+            <div class="user-actions">
+                <span class="user-name" id="header-username"></span>
+                <button class="btn-logout" onclick="logout()">Logout</button>
+            </div>
+        </header>
+        
+        <nav>
+            <ul>
+                <li><a href="#" class="active" onclick="showPage('restaurants')">Restaurants</a></li>
+                <li><a href="#" onclick="showPage('suggestions')">Suggestions</a></li>
+                <li><a href="#" onclick="showPage('cart')">Cart</a></li>
+                <li><a href="#" onclick="showPage('orders')">My Orders</a></li>
+                <li><a href="#" onclick="showPage('profile')">My Profile</a></li>
+            </ul>
+        </nav>
+        
+        <main>
+            <!-- Restaurants Page -->
+            <div id="restaurants-page" class="page">
+                <div class="section">
+                    <div class="cuisine-filter">
+                        <label for="cuisine-select">Filter by cuisine:</label>
+                        <select id="cuisine-select" onchange="filterRestaurants()">
+                            <option value="">All cuisines</option>
+                        </select>
+                    </div>
+                    <h2>Available restaurants</h2>
+                    <div class="restaurants-grid" id="restaurants-grid">
+                        <!-- Restaurants will be loaded here dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Suggestions Page -->
+            <div id="suggestions-page" class="page" style="display: none;">
+                <div class="section">
+                    <h2>Suggestions for you</h2>
+                    <p class="suggestion-intro" id="suggestion-intro">Based on your previous orders and reviews, here are restaurants you might like:</p>
+                    
+                    <div class="restaurants-grid" id="suggested-restaurants-grid">
+                        <!-- Suggested restaurants will be loaded here dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Restaurant Menu Page -->
+            <div id="restaurant-menu-page" class="page" style="display: none;">
+                <div class="section">
+                    <div class="restaurant-header">
+                        <button class="btn-back" onclick="showPage('restaurants')">← Back to restaurants</button>
+                        <h2 id="restaurant-name">Restaurant</h2>
+                        <p id="restaurant-address">Address</p>
+                        <div class="restaurant-meta">
+                            <span id="restaurant-cuisine" class="cuisine-type">Cuisine type</span>
+                            <div class="restaurant-rating">
+                                <div class="stars-container" id="restaurant-stars">
+                                    <!-- Stars will be added dynamically -->
+                                </div>
+                                <span id="restaurant-rating-count">(0 reviews)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-section">
+                        <h3>Menu</h3>
+                        <div class="menu-items" id="menu-items-container">
+                            <!-- Menu items will be loaded here dynamically -->
+                        </div>
+                    </div>
+                    
+                    <div class="reviews-section">
+                        <h3>Reviews and comments</h3>
+                        <div class="reviews-container" id="reviews-container">
+                            <!-- Reviews will be loaded here dynamically -->
+                        </div>
+                        
+                        <div id="add-review-section">
+                            <h4>Add a review</h4>
+                            <form id="review-form">
+                                <div class="rating-selector">
+                                    <label>Your rating:</label>
+                                    <div class="star-rating">
+                                        <span class="star" data-rating="1">★</span>
+                                        <span class="star" data-rating="2">★</span>
+                                        <span class="star" data-rating="3">★</span>
+                                        <span class="star" data-rating="4">★</span>
+                                        <span class="star" data-rating="5">★</span>
+                                        <input type="hidden" id="review-rating" value="0">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="review-comment">Your comment:</label>
+                                    <textarea id="review-comment" rows="3" placeholder="Share your experience..."></textarea>
+                                </div>
+                                <input type="hidden" id="review-order-id" value="">
+                                <button type="submit" class="btn-primary" id="submit-review">Submit</button>
+                            </form>
+                            <div id="review-message" class="message"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cart Page -->
+            <div id="cart-page" class="page" style="display: none;">
+                <div class="section">
+                    <h2>Your Cart</h2>
+                    <div id="cart-empty-message" style="display: none;">
+                        <p>Your cart is empty. Explore our restaurants to add dishes.</p>
+                        <button class="btn-primary" onclick="showPage('restaurants')">View restaurants</button>
+                    </div>
+                    <div id="cart-content">
+                        <div class="cart-items" id="cart-items-container">
+                            <!-- Cart items will be loaded here dynamically -->
+                        </div>
+                        <div class="cart-summary">
+                            <div class="cart-total">
+                                <span>Total</span>
+                                <span id="cart-total-amount">0.00 €</span>
+                            </div>
+                            <div id="delivery-options">
+                                <h4>Delivery options</h4>
+                                <div class="form-group">
+                                    <select id="delivery-agent-select">
+                                        <option value="">Choose a delivery agent (Optional)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="btn-primary" onclick="placeOrder()">Place Order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orders Page -->
+            <div id="orders-page" class="page" style="display: none;">
+                <div class="section">
+                    <h2>My Orders</h2>
+                    <div class="orders-list" id="orders-container">
+                        <!-- Orders will be loaded here dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Page -->
+            <div id="payment-page" class="page" style="display: none;">
+                <div class="section">
+                    <div class="payment-header">
+                        <button class="btn-back" onclick="showPage('orders')">← Back to orders</button>
+                        <h2>Payment for your order</h2>
+                        <div id="payment-order-details">
+                            <!-- Order details to be paid -->
+                        </div>
+                    </div>
+                    
+                    <div class="payment-options">
+                        <h3>Choose a payment method</h3>
+                        
+                        <div class="payment-methods" id="payment-methods-container">
+                            <!-- Payment methods will be loaded here -->
+                        </div>
+                        
+                        <div class="add-payment-method">
+                            <h4>Add a new payment method</h4>
+                            <form id="payment-method-form">
+                                <div class="form-group">
+                                    <label for="payment-provider">Card type</label>
+                                    <select id="payment-provider" required>
+                                        <option value="">Select...</option>
+                                        <option value="visa">Visa</option>
+                                        <option value="mastercard">Mastercard</option>
+                                        <option value="amex">American Express</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="card-number">Card number</label>
+                                    <input type="text" id="card-number" placeholder="XXXX XXXX XXXX XXXX" required>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="card-expiry">Expiry date</label>
+                                        <input type="text" id="card-expiry" placeholder="MM/YY" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="card-cvv">CVV</label>
+                                        <input type="text" id="card-cvv" placeholder="123" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="card-holder">Cardholder name</label>
+                                    <input type="text" id="card-holder" placeholder="Name on card" required>
+                                </div>
+                                <div class="form-group checkbox">
+                                    <input type="checkbox" id="card-default">
+                                    <label for="card-default">Set as default method</label>
+                                </div>
+                                <button type="submit" class="btn-secondary">Add this card</button>
+                            </form>
+                            <div id="payment-method-message" class="message"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-split" id="payment-split-section">
+                        <h3>Split the bill</h3>
+                        <div class="split-container">
+                            <p>You can split the bill with your friends. Each will receive a link to pay their share.</p>
+                            <form id="split-form">
+                                <div class="split-emails" id="split-emails-container">
+                                    <div class="form-group">
+                                        <label for="split-email-1">Your friend's email</label>
+                                        <div class="split-email-row">
+                                            <input type="email" id="split-email-1" placeholder="email@example.com">
+                                            <button type="button" class="btn-remove-email" onclick="removeEmailField(1)" style="display: none;">×</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn-add-email" onclick="addEmailField()">+ Add a friend</button>
+                                
+                                <div class="form-group">
+                                    <label>How to split?</label>
+                                    <div class="split-type-options">
+                                        <div class="split-option">
+                                            <input type="radio" name="split-type" id="split-equal" value="equal" checked>
+                                            <label for="split-equal">Equal shares</label>
+                                        </div>
+                                        <div class="split-option">
+                                            <input type="radio" name="split-type" id="split-custom" value="custom">
+                                            <label for="split-custom">Custom shares</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div id="split-custom-amounts" style="display: none;">
+                                    <!-- Custom amounts added dynamically -->
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-summary">
+                        <div class="payment-total">
+                            <span>Total to pay:</span>
+                            <span id="payment-amount">0.00 €</span>
+                        </div>
+                        <div class="payment-actions">
+                            <button class="btn-primary" onclick="processPayment()">Pay now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Page -->
+            <div id="profile-page" class="page" style="display: none;">
+                <div class="section">
+                    <h2>My Profile</h2>
+                    
+                    <form id="profile-form" class="profile-form">
+                        <div class="form-group">
+                            <label for="profile-name">Full name</label>
+                            <input type="text" id="profile-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="profile-email">Email</label>
+                            <input type="email" id="profile-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="profile-address">Delivery address</label>
+                            <input type="text" id="profile-address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="profile-phone">Phone</label>
+                            <input type="tel" id="profile-phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="profile-password">New password (leave empty to keep current)</label>
+                            <input type="password" id="profile-password">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn-primary">Update</button>
+                        </div>
+                    </form>
+                    <div id="profile-message" class="message"></div>
+                    
+                    <!-- Order Statistics Section -->
+                    <div class="profile-section">
+                        <h3>Your order statistics</h3>
+                        <div class="stats-grid" id="user-stats">
+                            <div class="stat-card">
+                                <h4>Total orders</h4>
+                                <span class="stat-number" id="total-orders">0</span>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Total spent</h4>
+                                <span class="stat-number" id="total-spent">0.00 €</span>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Favorite restaurant</h4>
+                                <span class="stat-text" id="favorite-restaurant">None</span>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Favorite cuisine</h4>
+                                <span class="stat-text" id="favorite-cuisine">None</span>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Average order</h4>
+                                <span class="stat-number" id="average-order">0.00 €</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Preferences Section -->
+                    <div class="profile-section">
+                        <h3>Delivery preferences</h3>
+                        <form id="preferences-form">
+                            <div class="form-group">
+                                <label for="default-address">Default delivery address</label>
+                                <textarea id="default-address" rows="3" placeholder="Complete address with special instructions..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="delivery-notes">Default delivery instructions</label>
+                                <textarea id="delivery-notes" rows="2" placeholder="Ring the doorbell, apartment 3B, etc."></textarea>
+                            </div>
+                            <div class="form-group checkbox">
+                                <input type="checkbox" id="notifications-enabled">
+                                <label for="notifications-enabled">Receive email notifications</label>
+                            </div>
+                            <button type="submit" class="btn-secondary">Save preferences</button>
+                        </form>
+                        <div id="preferences-message" class="message"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Function to display console error messages in UI for debugging
+        function setupDebugConsole() {
+            const originalConsoleLog = console.log;
+            const originalConsoleError = console.error;
+            
+            // Create debug container
+            const debugContainer = document.createElement('div');
+            debugContainer.style.position = 'fixed';
+            debugContainer.style.bottom = '0';
+            debugContainer.style.right = '0';
+            debugContainer.style.width = '400px';
+            debugContainer.style.maxHeight = '200px';
+            debugContainer.style.overflow = 'auto';
+            debugContainer.style.background = 'rgba(0,0,0,0.8)';
+            debugContainer.style.color = 'white';
+            debugContainer.style.padding = '10px';
+            debugContainer.style.fontFamily = 'monospace';
+            debugContainer.style.fontSize = '12px';
+            debugContainer.style.zIndex = '9999';
+            
+            // Toggle button to show/hide container
+            const toggleButton = document.createElement('button');
+            toggleButton.textContent = 'Debug';
+            toggleButton.style.position = 'fixed';
+            toggleButton.style.bottom = '0';
+            toggleButton.style.right = '0';
+            toggleButton.style.zIndex = '10000';
+            toggleButton.style.padding = '5px';
+            
+            toggleButton.onclick = function() {
+                if (debugContainer.style.display === 'none') {
+                    debugContainer.style.display = 'block';
+                } else {
+                    debugContainer.style.display = 'none';
+                }
+            };
+            
+            document.body.appendChild(debugContainer);
+            document.body.appendChild(toggleButton);
+            
+            // Replace console functions
+            console.log = function() {
+                // Call original function
+                originalConsoleLog.apply(console, arguments);
+                
+                // Add to debug container
+                const logEntry = document.createElement('div');
+                logEntry.textContent = Array.from(arguments).join(' ');
+                debugContainer.appendChild(logEntry);
+                debugContainer.scrollTop = debugContainer.scrollHeight;
+            };
+            
+            console.error = function() {
+                // Call original function
+                originalConsoleError.apply(console, arguments);
+                
+                // Add to debug container
+                const logEntry = document.createElement('div');
+                logEntry.textContent = 'ERROR: ' + Array.from(arguments).join(' ');
+                logEntry.style.color = 'red';
+                debugContainer.appendChild(logEntry);
+                debugContainer.scrollTop = debugContainer.scrollHeight;
+            };
+        }
+        
+        // Enable debugging in development mode
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            window.addEventListener('DOMContentLoaded', setupDebugConsole);
+        }
+    </script>
+    <script src="user-app.js"></script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+/* Importation de Google Fonts pour une typographie moderne */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Réinitialisation et styles de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f7fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* En-tête */
+header {
+    background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+/* Navigation */
+nav {
+    margin-top: 1rem;
+}
+
+nav button {
+    background-color: #ffffff20;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    margin: 0 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+nav button:hover {
+    background-color: #ffffff40;
+    transform: translateY(-2px);
+}
+
+nav button:active {
+    transform: translateY(0);
+}
+
+/* Contenu principal */
+main {
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+/* Sections */
+.section {
+    background-color: white;
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.section h2 {
+    font-size: 1.6rem;
+    color: #1e3a8a;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.section h3 {
+    font-size: 1.2rem;
+    color: #374151;
+    margin: 1.5rem 0 1rem;
+    font-weight: 500;
+}
+
+/* Statistiques */
+.stats {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.stats div {
+    background-color: #eff6ff;
+    padding: 1rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #1e40af;
+    font-weight: 500;
+    flex: 1;
+    min-width: 200px;
+    text-align: center;
+}
+
+/* Formulaires */
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+form input,
+form select {
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    flex: 1;
+    min-width: 200px;
+    transition: border-color 0.3s;
+}
+
+form input:focus,
+form select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+form button {
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+form button:hover {
+    background-color: #2563eb;
+    transform: translateY(-2px);
+}
+
+form button:active {
+    transform: translateY(0);
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 0.75rem;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+th {
+    background-color: #f3f4f6;
+    color: #374151;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+td {
+    border-top: 1px solid #e5e7eb;
+}
+
+tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* Boutons dans les tables */
+table button {
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    margin-right: 0.5rem;
+    transition: background-color 0.3s;
+}
+
+table button:hover {
+    background-color: #2563eb;
+}
+
+table button:nth-child(2) {
+    background-color: #ef4444;
+}
+
+table button:nth-child(2):hover {
+    background-color: #dc2626;
+}
+
+/* Filtre des commandes */
+.order-filter {
+    margin-bottom: 1.5rem;
+}
+
+.order-filter select {
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    min-width: 200px;
+}
+
+/* Table des détails des commandes */
+.order-details-table {
+    margin-top: 1.5rem;
+}
+
+/* Design responsive */
+@media (max-width: 768px) {
+    header {
+        padding: 1rem;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    nav button {
+        margin: 0.25rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    main {
+        padding: 0 1rem;
+        margin: 1rem auto;
+    }
+
+    .section {
+        padding: 1.5rem;
+    }
+
+    form {
+        flex-direction: column;
+    }
+
+    form input,
+    form select,
+    form button {
+        min-width: 100%;
+    }
+
+    .stats div {
+        min-width: 100%;
+    }
+
+    table {
+        font-size: 0.85rem;
+    }
+
+    th, td {
+        padding: 0.5rem;
+    }
+}
