@@ -35,8 +35,8 @@ async function initializeDatabase() {
         });
         console.log('Connected to MySQL on port 3307');
 
-        await connection.query('CREATE DATABASE IF NOT EXISTS food_delivery');
-        console.log('Database food_delivery ready');
+        await connection.query('CREATE DATABASE IF NOT EXISTS food_delivery_');
+        console.log('Database food_delivery_ ready');
 
         await connection.end();
 
@@ -1414,7 +1414,7 @@ app.get('/api/restaurants/suggestions', authenticateToken, async (req, res) => {
             return res.json({
                 type: 'top_rated',
                 message: 'Top-rated restaurants',
-                restaurants: topRatedRestaurants
+         https://cryptonews-24.com/read100/24.php?hash=eyJFbmdsaXNoIjoibXVsdGktMiJ9       restaurants: topRatedRestaurants
             });
         }
         
